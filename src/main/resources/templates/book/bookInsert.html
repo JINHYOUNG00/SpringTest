@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{common/layouts/default_layout}"
+	layout:fragment="Content">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css"
+	rel="stylesheet">
+<style>
+.form-container {
+	margin-top: 20px;
+}
+
+.form-header {
+	background-color: #f8f9fa;
+	padding: 10px;
+	border-bottom: 1px solid #dee2e6;
+}
+
+.form-body {
+	padding: 20px;
+	background-color: #ffffff;
+	border: 1px solid #dee2e6;
+}
+
+.form-footer {
+	background-color: #f8f9fa;
+	padding: 10px;
+	border-top: 1px solid #dee2e6;
+	text-align: right;
+}
+</style>
+</head>
+<body>
+	<div class="container form-container">
+		<div class="form-header">
+			<h5>도서 입력</h5>
+		</div>
+		<form name="insertForm" class="form-body" method="post" th:action>
+			<div class="mb-3">
+				<label for="bookNo" class="form-label">도서번호</label> 
+				<input
+					type="text" class="form-control" id="bookNo" name="bookNo" th:value="${bno}"
+					readonly="readonly">
+			</div>
+			<div class="mb-3">
+				<label for="bookName" class="form-label">도서명</label> <input
+					type="text" class="form-control" id="bookName"
+					name="bookName">
+			</div>
+			<div class="mb-3">
+				<label for="bookCoverimg" class="form-label">도서표지</label> <input
+					type="text" class="form-control" id="bookCoverimg" name="bookCoverimg" required>
+			</div>
+			<div class="mb-3">
+				<label for="bookDate" class="form-label">출판일자</label> <input
+					type="date" class="form-control" id="bookDate" name="bookDate" required>
+			</div>
+			<div class="mb-3">
+				<label for="bookPublisher" class="form-label">출판사</label> <input
+					type="text" class="form-control" id="bookPublisher" name="bookPublisher" required>
+			</div>
+			<div class="mb-3">
+				<label for="bookPrice" class="form-label">금액</label> <input
+					type="number" class="form-control" id="bookPrice" name="bookPrice" required>
+			</div>
+			<div class="mb-3">
+				<label for="bookInfo" class="form-label">도서소개</label>
+				<textarea class="form-control" id="bookInfo" name="bookInfo"
+					rows="5" required></textarea>
+			</div>
+			<div class="form-footer">
+				<button type="submit" class="btn btn-primary">등록</button>
+				<button type="button" class="btn btn-secondary" onclick="goList()">조회</button>
+			</div>
+		</form>
+		<!-- <form action="uploadForm" method="post" enctype="multipart/form-data">
+			<input type="file" name="images" multiple>
+			<button type="submit">저장</button>
+		</form> -->
+	</div>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+	<script type="text/javascript">
+		function goList() {
+			location.href = `/book/`
+		}
+
+		insertForm.addEventListener('submit',bookInsertHandler);
+
+		function bookInsertHandler(e) {
+			e.preventDefault();
+
+			let bookName = document.querySelector('input[name="bookName"]');
+			if (bookName.value == '') {
+				alert('도서명이 입력되지 않았습니다.');
+				bookName.focus();
+				return;
+			}
+			insertForm.submit();
+			alert('도서등록이 완료 되었습니다.')
+		}
+	</script>
+	
+</body>
+</html>
